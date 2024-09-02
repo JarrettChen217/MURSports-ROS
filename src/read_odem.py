@@ -20,10 +20,11 @@ class OdomSubscriber(Node):
     def odom_callback(self, msg):
         # Extracting line speed from “/odom” messages
         self.linear_speed = msg.twist.twist.linear.x
+        self.angular_speed = msg.twist.twist.angular.z
 
     def read_linear_speed(self):
         # Print or record the current line speed
-        self.get_logger().info(f'Current Linear Speed: {self.linear_speed:.2f} m/s')
+        self.get_logger().info(f'Current Linear Speed: {self.linear_speed:.2f} m/s\nCurrent Angular Speed: {self.angular_speed:.2f} m/s')
 
 def main(args=None):
     rclpy.init(args=args)
