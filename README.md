@@ -177,3 +177,65 @@ Subsequent parameters such as linear speed, angular speed will be logged in the 
 
 ---
 
+### 4. `robot_controller_xbox.py`
+
+#### Dependencies:
+
+- **Related ROS2 Topic**: `/cmd_vel`
+- **Required Python Libraries**:
+  - `pygame`: Used for listening to joysticks inputs
+
+##### Install Additional Libraries:
+
+```bash
+pip install pygame
+```
+
+#### Run Command :
+
+```bash
+python3 robot_controller_xbox.py
+```
+
+> The code will automatically detect the joystick connected to the computer and select the first joystick for connection <u>(if no joystick is found, it will fail and exit directly!)</u>
+
+Then, we can use the joystick to control the movement of the car.
+
+> (Referring to the key settings of racing games, you can also modify it according to the axis [description of pygame](https://www.pygame.org/docs/ref/joystick.html).)
+
+Current key settings:
+
+* <u>Left Joystick_x</u> (axis 0): **Left** and **Right** movement (steer)
+* <u>Left Trigger</u> (axis 4): **Forward** movement (throttle)
+* <u>Right Trigger</u> (axis 5): **Backward** movement (brake)
+* <u>No Input</u>: **Stop**
+
+> [!note]
+>
+> In order to prevent joystick drift caused by handle aging, a "dead zone" of `0.1` has been set.
+
+#### Parameter adjustment
+
+##### Max speed
+
+Max speed adjustable, through:
+
+* `self.max_linear`
+* `self.max_angular`
+
+##### Publish rate
+
+> [!note]
+>
+> May affect the resource usage or lead to lagging!
+
+Publish rate adjustable, through:
+
+* `self.timer = self.create_timer(0.1, self.publish_cmd_vel)  # 10Hz`
+
+#### Closing the controller
+
+Need to take extra care of shutting this node down!
+
+Call `shutdown()` function every time! In order to quit `pygame`.
+
