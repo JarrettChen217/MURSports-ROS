@@ -61,12 +61,17 @@ class RobotController(Node):
         assert angular_speed < (self.max_angular + 0.1)
 
         self.cmd_vel.linear.x = linear_speed
-        self.cmd_vel.angular.z = -angular_speed
+        if(linear_speed >= 0):
+            self.cmd_vel.angular.z = -angular_speed
+        else:
+            # reversing angular in negative.
+            self.cmd_vel.angular.z = angular_speed
         # publish the twist msg.
         self.publisher_.publish(self.cmd_vel)
         self.get_logger().info(f'Publishing: linear_x={self.cmd_vel.linear.x}, angular_z={self.cmd_vel.angular.z}')
 
     def shutdown(self):
+        print("shutdowned")
         pygame.quit()  # shutdown pygame.
 
 def main(args=None):
