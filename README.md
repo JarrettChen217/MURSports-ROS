@@ -239,3 +239,9 @@ Need to take extra care of shutting this node down!
 
 Call `shutdown()` function every time! In order to quit `pygame`.
 
+
+
+# application file
+
+try add usd file into the stage by python code
+https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/Documentation/Isaac-Sim-Docs_2021.2.1/app_isaacsim/app_isaacsim/manual_standalone_python.html
