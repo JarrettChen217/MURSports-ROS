@@ -20,6 +20,8 @@ class ImageSubscriber(Node):
     def image_callback(self, msg):
         # Convert ROS image messages to OpenCV image format
         cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        
+        # resized_image = cv2.resize(cv_image, (300, 300))
 
         # Display the image in the window.
         cv2.imshow("Frame", cv_image)
