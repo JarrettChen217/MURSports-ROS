@@ -245,3 +245,7 @@ Call `shutdown()` function every time! In order to quit `pygame`.
 
 try add usd file into the stage by python code
 https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/Documentation/Isaac-Sim-Docs_2021.2.1/app_isaacsim/app_isaacsim/manual_standalone_python.html
+
+
+# Remote Procedure Call (RPC)
+Consider about the RPC to promote thread programming for the whole proj.
