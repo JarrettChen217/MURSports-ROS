@@ -19,7 +19,7 @@ should_shutdown = False
 # 启动RPC服务的函数
 def start_server():
     global server
-    server = ThreadedServer(AddService, port=18861)
+    server = ThreadedServer(AddService, port=18861, hostname='0.0.0.0')
     print("Server is listening on port 18861...")
     server.start()
 
