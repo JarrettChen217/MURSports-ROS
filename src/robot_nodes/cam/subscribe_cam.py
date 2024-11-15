@@ -63,7 +63,7 @@ def main(args=None):
     ros_thread.start()
 
     # start the rpyc server
-    server = ThreadedServer(cam_node, port=18860)
+    server = ThreadedServer(cam_node, port=18860, hostname='0.0.0.0')
     print("RPyC Server is listening on port 18860...")
     try:
         server.start()
