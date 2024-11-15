@@ -39,7 +39,7 @@ def on_press(key):
             print("Esc pressed, exiting the loop.")
             running = False
         elif hasattr(key, 'char') and key.char == 'g':
-            robot_obj = get_robotgov_object()
+            robot_obj = get_robot_object()
         elif hasattr(key, 'char') and key.char == 'r':
             get_robot_position(robot_obj)
         elif hasattr(key, 'char') and key.char == 'f':
@@ -101,6 +101,7 @@ import cv2
 import numpy as np
 
 # connecting to all server nodes
+lidar_server = rpyc.connect("localhost", 18858)
 controller_server = rpyc.connect("localhost", 18859)
 cam_server = rpyc.connect("localhost", 18860)
 odem_server = rpyc.connect("localhost", 18861)
@@ -117,26 +118,35 @@ def get_image():
     cv_image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
     return cv_image
 
-# def get_display_image():
-#     cv_image = get_image()
-#     try:        
-#         # 显示图像
-#         cv2.imshow("Frame", cv_image)
-#         cv2.imwrite('frame.jpg', cv_image)
-#     except Exception as e:
-#         print(f"Error in converting image: {e}")
+def get_lidar():
+    lidar_bytes = lidar_server.root.exposed_get_lidar_data()
+    if lidar_bytes is None:
+        print("No lidar image received. Waiting...")
+        return None
+    return lidar_bytes
 
 def get_linear_angular_speed():
     linear_speed, angular_speed = odem_server.root.exposed_read_linear_speed()
     return linear_speed, angular_speed
 
-# def get_print_odem():
-#     linear_speed, angular_speed = get_linear_angular_speed()
-#     print(f'Current Linear Speed: {linear_speed:.2f} m/s\nCurrent Angular Speed: {angular_speed:.2f} m/s')
+
+# test cases:
+def get_print_odem():
+    linear_speed, angular_speed = get_linear_angular_speed()
+    print(f'Current Linear Speed: {linear_speed:.2f} m/s\nCurrent Angular Speed: {angular_speed:.2f} m/s')
 
 def set_control(linear, angular):
     # 设置线速度和角速度控制值，范围从-1到1
     controller_server.root.exposed_set_control(linear, angular)
+
+def get_display_image():
+    cv_image = get_image()
+    try:        
+        # 显示图像
+        cv2.imshow("Frame", cv_image)
+        cv2.imwrite('frame.jpg', cv_image)
+    except Exception as e:
+        print(f"Error in converting image: {e}")
 
 # 无限循环以维持仿真
 try:
